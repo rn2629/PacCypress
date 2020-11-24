@@ -1,0 +1,198 @@
+﻿:root {
+    --main-bg-color: #eef6df;
+    --main-menu-color: #598393;
+    --secondary-menu-color: #12455a;
+    --secondary-bg-color: #aec3b0;
+    --main-header-color: #aec3b0;
+
+    --main-menu-text-color: white;
+    --secondary-menu-text-color: grey;
+}
+
+
+body {
+    height: 100%;
+    width: 100%;
+    background-color: whitesmoke;
+}
+html {
+    height: 100%;
+    width: 100%;
+
+}
+.vertical-menu {
+    height: auto;
+    background-color: var(--main-menu-color);
+
+}
+
+    .vertical-menu a {
+        background-color: var(--main-menu-color);
+        color: var(--main-menu-text-color);
+        display: block; /* Make the links appear below each other */
+        padding: 12px; /* Add some padding */
+        text-decoration: none; /* Remove underline from links */
+    }
+
+.vertical-menu a:hover {
+    background-color: var(--secondary-menu-color); /* recolor on mouse-over */
+}
+
+.vertical-menu a.active {
+    background-color: var(--main-header-color); /* recolor the "active/current" link */
+    color: var(--secondary-menu-text-color);
+}
+
+.container1 {
+    height: 100%;
+    width: 100%;
+    
+}
+.menu1 {
+    height: 100%;
+    width: 100%;
+}
+
+.containerCalendrier {
+    padding-top:4%;
+    max-height: 78%;
+    width: 75%;
+    display: inline-block;
+    vertical-align:top;
+    height:80%;
+}
+
+#containerContenue {
+    display: inline-block;
+    width: 18%;
+    padding-left: 4%;
+    vertical-align: top;
+    height:80%;
+}
+
+.logoCegep {
+    display: block;
+    float: right;
+}
+
+#btnCalendrier1 {
+    display: block;
+    margin-top: 260%;
+}
+
+#btnDeconnexion {
+    display: block;
+    vertical-align: top;
+    margin-top: 10%;
+    margin-left:53%;
+}
+
+.NomPersonne {
+    margin-top: 30%;
+    font-family: "Arial Black", Gadget, sans-serif;
+    background-color:snow;
+    border:1px solid black;
+  
+}
+
+.lstBtn{
+    margin-left:92%;
+    float:right;
+    margin-top:1%;
+ 
+}
+
+.lstBtn1 {
+    display:inline-block;
+    margin-left: 2%;
+    float: left;
+    margin-top: 1%;
+
+}
+
+
+.navbar-nav {
+    background-color: #12455a;
+    margin-right: -3%;
+    margin-left: -1%;
+    padding-bottom: 1%;
+}
+
+.black-background {
+    background-color: #598393;
+}
+
+.green-background {
+    background-color: #aec3b0;
+}
+#customers {
+    margin-top:3%;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    #customers td, #customers th {
+        border: 1px solid black;
+        padding: 8px;
+    }
+
+    #customers tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #customers tr:hover {
+        background-color: #ddd;
+    }
+
+    #customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    #btnSendAdmin{
+        margin-top:2%;
+    }
+
+    .sideList{
+        width:22%;
+        display:inline-block;
+        border:1px solid black;
+        margin-left:1%;
+        margin-top:7%;
+        vertical-align:central;
+    }
+
+    #logot{
+        display:inline-block;
+        margin-right:2%;
+    }
+    .row{
+        margin-left:0PX;
+        margin-right:0px;
+    }
+
+.evaluation {
+    margin-top: 2%;
+    background-color: #12455a;
+}
+
+.containeurList {
+    margin: 3%;
+    padding: 1%;
+    background-color: #aec3b0;
+}
+
+.containeurQuestions {
+    margin: 3%;
+    padding: 1%;
+}
+
+.containeurAjoutQuestion {
+    margin: 3%;
+    padding: 1%;
+    background-color: #aec3b0;
+}

@@ -1,0 +1,22 @@
+﻿@using PAC.Models
+@model PAC.Models.Etudiant
+@{
+    ViewBag.Title = "Horaire";
+}
+<link href="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler_material.css"
+      rel="stylesheet" type="text/css" charset="utf-8">
+<div class="containerCalendrier">
+    <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:79vh;'>
+        <div class="dhx_cal_navline">
+
+
+            <div class="text-center w-100 p-3 h-100 font-weight-bold" style="font-size:25px">Disponibilité</div>
+        </div>
+        <div class="dhx_cal_header"></div>
+        <div class="dhx_cal_data"></div>
+    </div>
+    <script src="~/js/HoraireEtu.js"></script>
+</div>
+<div id="containerContenue">
+    <button onclick="window.location.href = '@Url.Action("Index","Navigation")';" type="button" class="btn btn-primary btn-lg" id="btnCalendrier1">Envoyer</button>
+</div>

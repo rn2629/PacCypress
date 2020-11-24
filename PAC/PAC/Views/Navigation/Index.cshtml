@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "";
+}
+
+<div class="container-fluid">
+    @{
+        int gridsize = (int)ViewData["gridSize"];
+        int nbOfItems = (int)ViewData["nbOfItems"];
+
+        int i = 0;
+        for (int j = 0; j < gridsize; j++)
+        {
+            <br />
+            <div class="row">
+
+                @{
+                    for (int k = 0; k < gridsize; k++)
+                    {
+                        <div class="col-xs-5 col-sm-6 col-lg-4">
+                            @{
+
+                                if (i < nbOfItems)
+                                {
+                                    if (User.IsInRole("ProfDeSoutien") && ViewBag.pages[i] == "Rencontre")
+                                    {
+                                        <a href="/@(ViewBag.pages[i])" target="_self">
+
+                                            <button width="*" height="*"><img class="img-thumbnail" src="~/images/Rencontre/@(ViewBag.pages[i]).png" alt="IMAGE NON TROUVÉ" border="0" />@(ViewBag.namePages[i]) </button>
+                                        </a>
+                                    }
+
+
+
+                                    else
+                                    {
+                                        <a href="/@(ViewBag.pages[i])" target="_self">
+
+                                            <button height="*" width="*"><img class="img-thumbnail" src="~/images/@(ViewBag.pages[i]).png" alt="IMAGE NON TROUVÉ" border="0" />@(ViewBag.namePages[i]) </button>
+
+
+
+                                        </a>
+                                    }
+
+                                }
+                                i++;
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        }
+    }
+</div>

@@ -1,0 +1,57 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/LayoutLogin.cshtml";
+}
+@model AdminControllerModel
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button style="margin-left:1%;"logout" type="submit" class="btn btn-primary btn-lg">Logout</button>
+            </form>
+        </li>
+    </ul>
+    <form asp-action="indexPost">
+        <table id="customers" style="margin:1%;">
+            <tr>
+                <th>Enseignants</th>
+                <th>Est un Professeur De Soutien</th>
+            </tr>
+            @foreach (Microsoft.AspNetCore.Identity.IdentityUser personne in Model.Enseignants)
+            {
+                <tr>
+                    <td>@personne.UserName</td>
+                    <td>
+                        <select name="@personne.Id">
+                            <option>non</option>
+                            <option>oui</option>
+                        </select>
+                    </td>
+                </tr>
+            }
+            @foreach (Microsoft.AspNetCore.Identity.IdentityUser personne in Model.ProfDesoutiens)
+            {
+                <tr>
+                    <td>@personne.UserName</td>
+                    <td>
+                        <select name="@personne.Id">
+                            <option>oui</option>
+                            <option>non</option>
+                        </select>
+                    </td>
+                </tr>
+            }
+        </table>
+        <input type="submit" id="btnSendAdmin" class="btn-primary">
+    </form>
+<button style="margin-top:1%" onclick="attention()" class="btn-primary" >Rénitialiser la BD</button>
+<script>
+    function attention()
+    {
+        if (confirm("Êtes-vous sur de vouloir rénitialiser la base de données de cette session-ci")) {
+            window.location.href = '@Url.Action("ResetPost")';
+        }
+
+    }
+</script>

@@ -1,0 +1,207 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model EvaluationControllerModel
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Feedback Form</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+        html, body {
+            min-height: 100%;
+        }
+
+        body, div, form, input, p {
+            padding: 0;
+            margin: 0;
+            outline: none;
+            font-family: Roboto, Arial, sans-serif;
+            font-size: 14px;
+            color: #666;
+            line-height: 22px;
+        }
+
+        h1 {
+            font-weight: 400;
+        }
+
+        h4 {
+            margin: 15px 0 4px;
+        }
+
+        .testbox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: inherit;
+            padding: 3px;
+        }
+
+        form {
+            width: 100%;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 5px #ccc;
+        }
+
+        input {
+            width: calc(100% - 10px);
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            vertical-align: middle;
+        }
+
+        .email {
+            display: block;
+            width: 45%;
+        }
+
+        input:hover, textarea:hover {
+            outline: none;
+            border: 1px solid #095484;
+        }
+
+        th, td {
+            width: 15%;
+            padding: 15px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+            vertical-align: unset;
+            line-height: 18px;
+            font-weight: 400;
+            word-break: break-all;
+        }
+
+        .first-col {
+            width: 16%;
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        textarea {
+            width: calc(100% - 6px);
+        }
+
+        .btn-block {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button {
+            width: 150px;
+            padding: 10px;
+            border: none;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            background-color: #095484;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0666a3;
+            }
+
+        @@media (min-width: 568px) {
+            th, td {
+                word-break: keep-all;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="testbox" id="boxbox">
+        <form asp-action="AutoEvaluationPost" asp-route-tRencontreId="@Model.AutoEvaluation.rencontreId" method="post">
+            <h1>PROJET - Grille D'auto-évaluation</h1>
+            <h3>Département d'informatique</h3>
+            <hr />
+            <hr />
+            <p>Nom de L'étudiant: @Model.Etudiant.UserName  </p>
+            <table>
+                <tr>
+                    <th class="first-col"></th>
+                    <th>Insuffisant (0)</th>
+                    <th>Passable (1)</th>
+                    <th>Bien (2)</th>
+                    <th>Excellent (3)</th>
+                </tr>
+                @foreach (Question pQuestion in Model.LstQuestion)
+                {
+                    <tr>
+                        <td class="first-col">
+                            <a>@pQuestion.question</a>
+                        </td>
+                        @if (Model.LstAutoEvaluationQuestion.Where(e => e.questionId == pQuestion.id).Select(e => e).First().resultat == 0)
+                        {
+                            <td><input type="radio" value="0" name="@pQuestion.id" checked="checked" /></td>
+                        }
+                        else
+                        {
+                            <td><input type="radio" value="0" name="@pQuestion.id" /></td>
+                        }
+
+                        @if (Model.LstAutoEvaluationQuestion.Where(e => e.questionId == pQuestion.id).Select(e => e).First().resultat == 1)
+                        {
+                            <td><input type="radio" value="1" name="@pQuestion.id" checked="checked" /></td>
+                        }
+                        else
+                        {
+                            <td><input type="radio" value="1" name="@pQuestion.id" /></td>
+                        }
+
+                        @if (Model.LstAutoEvaluationQuestion.Where(e => e.questionId == pQuestion.id).Select(e => e).First().resultat == 2)
+                        {
+                            <td><input type="radio" value="2" name="@pQuestion.id" checked="checked" /></td>
+                        }
+                        else
+                        {
+                            <td><input type="radio" value="2" name="@pQuestion.id" /></td>
+                        }
+
+                        @if (Model.LstAutoEvaluationQuestion.Where(e => e.questionId == pQuestion.id).Select(e => e).First().resultat == 3)
+                        {
+                            <td><input type="radio" value="3" name="@pQuestion.id" checked="checked" /></td>
+                        }
+                        else
+                        {
+                            <td><input type="radio" value="3" name="@pQuestion.id" /></td>
+                        }
+                    </tr>
+                }
+
+
+            </table>
+            <h4>Total : @Model.AutoEvaluation.resultat  /@Model.AutoEvaluation.ptsTotal</h4>
+            <h4>Commentaire</h4>
+            <textarea rows="5" style="width:100%" name="Commentaire">@Model.AutoEvaluation.commentaire</textarea>
+            <h4>Nom de l'enseignant superviseur : </h4>
+            <input class="email" type="text" name="name" disabled="disabled" value="@Model.Enseignant.UserName" style="width:20%"/>
+            <button onclick="imprimer()">Imprimer</button>
+            <div class="btn-block">
+                <button type="submit">Soumettre</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    function imprimer() {
+        var prtContent = document.getElementById("boxbox");
+        var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+        WinPrint.document.write(prtContent.innerHTML);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+    }
+</script>

@@ -1,0 +1,57 @@
+﻿@page
+@model TwoFactorAuthenticationModel
+@{
+    ViewData["Title"] = "Identification à deux facteurs";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<h4>@ViewData["Title"]</h4>
+@if (Model.Is2faEnabled)
+{
+    if (Model.RecoveryCodesLeft == 0)
+    {
+        <div class="alert alert-danger">
+            <strong>Vous n'avez plus de codes de récupération.</strong>
+            <p>Vous devez <a asp-page="./GenerateRecoveryCodes">générer de nouveaux codes de récupération</a> avant de pouvoir vous connecter avec des codes de récupérations.</p>
+        </div>
+    }
+    else if (Model.RecoveryCodesLeft == 1)
+    {
+        <div class="alert alert-danger">
+            <strong>Vous avez 1 code de récupération restant.</strong>
+            <p>Vous pouvez <a asp-page="./GenerateRecoveryCodes">générer de nouveaux codes de récupération</a>.</p>
+        </div>
+    }
+    else if (Model.RecoveryCodesLeft <= 3)
+    {
+        <div class="alert alert-warning">
+            <strong>Vous avez @Model.RecoveryCodesLeft code de récupération restant.</strong>
+            <p>Vous devriez <a asp-page="./GenerateRecoveryCodes">générer de nouveaux codes de récupération</a>.</p>
+        </div>
+    }
+
+    if (Model.IsMachineRemembered)
+    {
+        <form method="post" style="display: inline-block">
+            <button type="submit" class="btn btn-default">Oubliez ce navigateur</button>
+        </form>
+    }
+    <a asp-page="./Disable2fa" class="btn btn-default">Désactiver l'identification à deux facteurs</a>
+    <a asp-page="./GenerateRecoveryCodes" class="btn btn-default">Réinitialiser les codes de récupération</a>
+}
+
+<h5>Application d'authetification</h5>
+@if (!Model.HasAuthenticator)
+{
+    <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-default">Ajouter une application d'authentification</a>
+}
+else
+{
+    <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-default">Configurer l'application d'authentification</a>
+    <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-default">Réinitialiser l'application d'authentification</a>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
