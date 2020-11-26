@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PAC.Controllers
 {
-        [Authorize(Roles = "Enseignant")]    
+        [Authorize(Roles = "Enseignant,ProfDeSoutien")]    
         [Route("api/[controller]")]
         [ApiController]
         public class EventsController : ControllerBase

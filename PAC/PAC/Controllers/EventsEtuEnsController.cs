@@ -187,60 +187,94 @@ namespace PAC.Controllers
             var startCours = _context.tblSeanceCours.Find(idCours).startTime;
             var endCours = _context.tblSeanceCours.Find(idCours).endTime;
             string dataParticipant = "";
-            string dataNull = dataParticipant;
+            string dataStart = "<div><p> Sélectionner un étudiant</p>";
+            bool etuDispo = false;
             IEnumerable<Etudiant> listParticipant = _context.tblEtudiant.ToList().Select(e => (Etudiant)e);
             IEnumerable<WebApiEventEtu> listDisponibilites = _context.tblDisponibilites.ToList().Select(e => (WebApiEventEtu)e);
 
 
-            dataParticipant = "<form method='post' action='#'>" + "<p>Sélectionner un étudiant </p>";
             try
             {
-                foreach (WebApiEventEtu dispo in listDisponibilites)
+                if(_context.tblRencontre.Where(e => e.seanceCoursId == idCours).Select(e => e).Count() == 0)
                 {
-                    var start = DateTime.Parse(dispo.start_date,
-                        System.Globalization.CultureInfo.InvariantCulture);
-                    var end = DateTime.Parse(dispo.end_date,
-                        System.Globalization.CultureInfo.InvariantCulture);
-
-                    //Fait le trie entre les étudiants qui sont disponible dans le cours et ceux qui ne le sont pas 
-                    if ((int)start.DayOfWeek == (int)startCours.DayOfWeek)
+                    foreach (WebApiEventEtu dispo in listDisponibilites)
                     {
-                        if (startCours.TimeOfDay >= start.TimeOfDay && endCours.TimeOfDay <= end.TimeOfDay)
+                        var start = DateTime.Parse(dispo.start_date,
+                            System.Globalization.CultureInfo.InvariantCulture);
+                        var end = DateTime.Parse(dispo.end_date,
+                            System.Globalization.CultureInfo.InvariantCulture);
+
+                        //Fait le trie entre les étudiants qui sont disponible dans le cours et ceux qui ne le sont pas 
+                        if ((int)start.DayOfWeek == (int)startCours.DayOfWeek)
                         {
-                            if (listParticipant.Select(e => e).Where(e => e.Id == dispo.idUser).ToList().First() != null)
+                            if (startCours.TimeOfDay >= start.TimeOfDay && endCours.TimeOfDay <= end.TimeOfDay)
                             {
-
-                                if (GetJumelage(dispo.idUser))
+                                if (listParticipant.Select(e => e).Where(e => e.Id == dispo.idUser).ToList().First() != null)
                                 {
-                                    dataParticipant += "<div>" +
-                                    $" <input type = 'button' class='etuJum_event' id = '{dispo.idUser}' value = '{GetUserNameEtu(dispo.id)}' onclick=\"deletePlage('{dispo.idUser}',{idCours})\">" +
-                                    " </div>";
-                                }
-                                else
-                                {
-                                    dataParticipant += "<div>" +
-                                    $"<input type = 'button' class='etu_event' id = '{dispo.idUser}' value = '{GetUserNameEtu(dispo.id)}' onclick=\"savePlage('{dispo.idUser}',{idCours})\">" +
-                                        "</div>";
-                                }
-                                listParticipant = listParticipant.Select(e => e).Where(e => e.Id != dispo.idUser).ToList();
 
+                                    if (GetJumelage(dispo.idUser))
+                                    {
+                                        dataParticipant += "<div>" +
+                                        $" <input type = 'button' class='etuJum_event' id = '{dispo.idUser}' value = '{GetUserNameEtu(dispo.id)}' onclick=\"deletePlage('{dispo.idUser}',{idCours})\">" +
+                                        " </div>";
+                                    }
+                                    else
+                                    {
+                                        dataParticipant += "<div>" +
+                                        $"<input type = 'button' class='etu_event' id = '{dispo.idUser}' value = '{GetUserNameEtu(dispo.id)}' onclick=\"savePlage('{dispo.idUser}',{idCours})\">" +
+                                            "</div>";
+                                    }
+                                    listParticipant = listParticipant.Select(e => e).Where(e => e.Id != dispo.idUser).ToList();
+                                    etuDispo = true;
+                                }
                             }
                         }
+                
                     }
+                    if (etuDispo)
+                        dataParticipant = dataStart + dataParticipant +
+                                        "<form action='/GestionnaireCalendrier/Forcer' method='post'>" +
+                                        @"<button type = 'submit' value=" + idCours + " name='idCours' class='etu_event' >Forcer une rencontre</button>" +
+                                        "</form></div>";
+                    
                 }
-
+                else if(_context.tblRencontre.Where(e => e.seanceCoursId == idCours).Select(e => e).Count() == 1)
+                {
+                    string etuId = _context.tblRencontre.Where(e => e.seanceCoursId == idCours).Select(e => e.etudiantId).First();
+                    string nomEtu = _context.AspNetUsers.Where(e => e.Id == etuId).Select(e => e.UserName).First();
+                    dataParticipant = "<div> Étudiant Sélectionné </div>" +
+                                    "<div>" +
+                                    $" <input type = 'button' class='etuJum_event' id = '{etuId}' value='{nomEtu}'  onclick=\"deletePlage('{etuId}',{idCours})\">" +
+                                    " </div>";
+                }
             }
             catch (Exception)
             {
 
             }
-            if (dataParticipant == dataNull)
-                dataParticipant = "<div> Aucun étudiant disponible </div>";
-            return dataParticipant;
+
+            if (dataParticipant == "")
+                if(_context.tblRencontre.Where(e=>e.seanceCoursId==idCours).Select(e=>e).Count()==0)
+                    dataParticipant = "<div> Aucun étudiant disponible </div>" +
+                                  "<form action='/GestionnaireCalendrier/Forcer' method='post'>"+
+                                  @"<button type = 'submit' value="+idCours+" name='idCours' class='etu_event' >Forcer une rencontre</button>" +
+                                  "</form>"+
+                                        "</div>";
+                else
+                {
+                    string etuId = _context.tblRencontre.Where(e => e.seanceCoursId == idCours).Select(e => e.etudiantId).First();
+                    string nomEtu = _context.AspNetUsers.Where(e=>e.Id==etuId).Select(e=>e.UserName).First();
+                    dataParticipant = "<div> Étudiant Sélectionné </div>" +
+                                    "<div>" +
+                                    $" <input type = 'button' class='etuJum_event' id = '{etuId}' value='{nomEtu}'  onclick=\"deletePlage('{etuId}',{idCours})\">" +
+                                    " </div>";
+                }
+                 
+            return dataParticipant+"</div>";
         }
 
 
-        //Supprime les rencontres dans la base de données
+        //Ajoute les rencontres dans la base de données
         [Authorize(Roles = "ProfDeSoutien")]
         [HttpPost]
         public ObjectResult SavePlage()

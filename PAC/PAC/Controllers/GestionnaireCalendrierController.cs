@@ -20,6 +20,7 @@ namespace PAC.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.rencontres = _context.tblRencontre.Select(e => e.seanceCoursId).ToList();
             return View(_context.tblAdminCommand.Select(e => e).First().rencontreFixed);
         }
 
@@ -37,7 +38,42 @@ namespace PAC.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        public IActionResult Forcer()
+        {
+            if(_context.tblRencontre.Where(e=>e.seanceCoursId== Int32.Parse(Request.Form["idCours"])).Select(e => e).Count() == 0)
+            {
+                CalendrierControllerModel model = new CalendrierControllerModel();
+                model.Cours = _context.tblSeanceCours.Find(Int32.Parse(Request.Form["idCours"]));
+                model.Prof = _context.AspNetUsers.Find(model.Cours.enseignantId);
+                model.Etudiants = (from p in _context.AspNetUsers
+                                   join e in _context.tblEtudiant on p.Id equals e.Id
+                                   where e.Jumeler == false
+                                   select p).ToList();
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
 
+        }
+        public IActionResult PostForcer()
+        {
+            var rencontre = new Rencontre();
+            var etudiant = _context.tblEtudiant.Find(Request.Form["option"]);
+            int coursId = Int32.Parse(Request.Form["cours"]);
+            if (etudiant.Jumeler == false)
+            {
+                etudiant.Jumeler = true;
+                rencontre.etudiantId = etudiant.Id;
+                rencontre.seanceCoursId = coursId;
+                _context.tblRencontre.Add(rencontre);
+            }
+
+            _context.SaveChanges();
+
+            return View("Index", _context.tblAdminCommand.Select(e => e).First().rencontreFixed);
+        }
         private List<Pairing> GetPairingFromDatabase()
         {
             IEnumerable<DatePickerEvent> tempListCours = (from p in _context.tblSeanceCours join e in _context.tblRencontre on p.id equals e.seanceCoursId select p);

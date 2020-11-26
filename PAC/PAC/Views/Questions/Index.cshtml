@@ -12,6 +12,7 @@
 </script>
 <div class="containeurQuestions">
     <h3>Liste des question</h3>
+    <p style="color:red">Si une rencontre à déja été créée, la modification des questions est impossible</p>
     <table id="customers">
         <tr>
             <th></th>
@@ -31,13 +32,35 @@
             @question.question
         </td>
         <td>
-            <button onclick="window.location.href = '@Url.Action("Up",new{pos=question.position})';">▲</button>
+            @if (ViewBag.Possible)
+            {
+                <button onclick="window.location.href = '@Url.Action("Up",new{pos=question.position})';">▲</button>
+            }
+            else
+            {
+                <button onclick="alert1()">▲</button>
+            }
+
         </td>
         <td>
-            <button onclick="window.location.href = '@Url.Action("Down",new{pos=question.position})';">▼</button>
+            @if (ViewBag.Possible)
+            {
+                <button onclick="window.location.href = '@Url.Action("Down",new{pos=question.position})';">▼</button>
+            }
+            else
+            {
+                <button onclick="alert1()">▼</button>
+            }
         </td>
         <td>
-            <button style="color:red" onclick="window.location.href = '@Url.Action("Supprimer",new{id=question.id})';">&#10060;</button>
+            @if (ViewBag.Possible)
+            {
+                <button style="color:red" onclick="window.location.href = '@Url.Action("Supprimer",new{id=question.id})';">&#10060;</button>
+            }
+            else
+            {
+                <button style="color:red" onclick="alert1()">&#10060;</button>
+            }
         </td>
     </tr>
         }

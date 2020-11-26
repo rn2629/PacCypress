@@ -24,8 +24,12 @@ else
 
 <button onclick="liaison()" class="btn btn-secondary btn-lg" style="margin:1%;">générer automatiquement</button>
 
-<body onload="init()">
-    <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100vh;'>
+<body onload="init()" id="Body">
+    <div class="spinner-border text-info" id="Loading" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100vh; opacity:0.2'>
+
         <div class="dhx_cal_navline">
             <div class="dhx_cal_prev_button">&nbsp;</div>
             <div class="dhx_cal_next_button">&nbsp;</div>
@@ -53,14 +57,14 @@ else
             height: auto;
             background-color: #2E933C !important;
             color: black !important;
-            border: 1px solid grey;
+            border: 2px solid black;
         }
 
         .dhx_cal_event_clear.prof_event {
             height: auto;
             background-color: #ffca67 !important;
             color: black !important;
-            border: 1px solid grey;
+            border: 2px solid black;
         }
 
         .dhx_cal_event_clear.collided_event {
@@ -84,6 +88,85 @@ else
         }
     </style>
     <script type="text/javascript">
+
+        function init() {
+            var topHeight = 0;
+
+            function showCalender() {
+                document.getElementById("Loading").style.display = "none";
+                document.getElementById("scheduler_here").style.opacity = 1;
+            }
+
+            function setHeight() {
+                scheduler.xy.bar_height = topHeight;
+            }
+            //Initialise la gestion des classes des evénements et Lance GetEvSize() pour update le stacking
+            scheduler.templates.event_class = function (start, end, ev) {
+
+                return getJumeler(ev);
+            };
+
+            //Fait une recherche avec l'API pour les classes qui ont une rencontre
+            function getJumeler(ev) {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/api/eventsEtuEns/GetRencontre/" + ev.id,
+                    dataType: "text",
+                    success: function (responseText) { setJumeler(responseText, ev.id); }
+                });
+                return scheduler.getEvent(ev.id).event_class;
+            }
+
+            //Gere les données après les avoir reçus de l'API
+            function setJumeler(response, id) {
+                if (response == "true" && scheduler.getEvent(id).event_class != "seanceJum") {
+                    scheduler.getEvent(id).event_class = "seanceJum";
+                    scheduler.updateEvent(id);
+                }
+
+                else {
+                    scheduler.getEvent(id).event_class = "prof_event";
+                }
+            }
+
+            //Initialise l'affichage des Enseignants
+            scheduler.templates.event_bar_text = function (start, end, ev) {
+
+                return getUserName(start, end, ev);
+            }
+
+            //Fait une requette à l'API pour ressortir le nom des Enseignants selon leurs horaires
+            function getUserName(start, end, ev) {
+                $.ajax({
+                    type: "GET",
+                    url: "/api/eventsEtuEns/GetUserNameEns/" + ev.id,
+                    dataType: "text",
+                    success: function (responseText) { setUserData(responseText, ev.id); }
+                });
+                return scheduler.getEvent(ev.id).event_bar_text;
+            }
+
+            //Gere les noms d'utilisateurs après les reçus
+            function setUserData(data, id) {
+                if (scheduler.getEvent(id).event_bar_text != data) {
+                    scheduler.getEvent(id).event_bar_text = data;
+                    scheduler.updateEvent(id);
+                    if (scheduler.getRenderedEvent(id).offsetHeight > topHeight)
+                        topHeight = scheduler.getRenderedEvent(id).offsetHeight;
+                }
+            }
+
+            //JumpStart l'affiche correct des horaires
+            setTimeout(function () {
+                scheduler.setCurrentView(scheduler._currentDate());
+                setTimeout(function () {
+                    setHeight();
+                    scheduler.setCurrentView(scheduler._currentDate());
+                    showCalender();
+                }, 1000);
+            }, 3500);
+        }
 
     function lock() {
         if (confirm("Êtes-vous sur de vouloir vérouiller les rencontres pour cette session-ci ?")) {

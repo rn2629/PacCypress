@@ -1,0 +1,101 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+    <div class="container">
+
+        <h1>Questions Fréquentes</h1>
+        <hr />
+        <h2>Section Professeur De Soutien</h2>
+        <hr />
+        <div class="accordion">
+            <div class="accordion-item">
+                <a>
+                    Comment ajouter un professeur de soutiens?
+                </a>
+                <div class="content">
+                    <p>Pour ajouter un professeur de soutien, il suffit de se connecter avec le compte administrateur qui vous est fourni dans votre fichier ressource. Pour avoir accès au fichier en question veuillez contacter le gestionnaire de projets. Il suffit alors, une fois sur la page, de cocher oui sur le compte voulue puis envoyer.</p>
+                    <img src="~/images/NewFolder/FAQAdmin.PNG" style="width:100%; height:100%" />
+                </div>
+            </div>
+            <div class="accordion-item">
+                <a>Comment générer les rencontres?</a>
+                <div class="content">
+                    <p>Vous pouvez générer les rencontres automatiquement en cliquant sur le bouton ( GÉNÉRER LES RENCONTRES). Vous pouvez ensuite gérer les cas particuliers en cliquant sur les boutons contenant les noms des étudiants. Cela aura pour effet de jumeler l'étudiant à la séance de cours ciblé. Il ne vous reste plus qu'à verrouiller pour empêcher les autres utilisateurs de modifier leurs horaires.</p>
+                    <img src="~/images/NewFolder/FAQGestion.PNG" style="width:100%; height:100%" />
+                </div>
+            </div>
+            <div class="accordion-item">
+                <a>Comment modifier l'évaluations et ses questions?</a>
+                <div class="content">
+                    <p>Pour modifier une évaluation, il suffit de se rendre sur la page portant le même nom et dans cette page il est possible de modifier/supprimer/ajouter une question via les 3 sections de la page.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <a>Comment voir toutes les rencontres et consulter les évaluations et auto-évaluations qui leurs sont reliées?</a>
+                <div class="content">
+                    <p>Pour ce faire, il suffit de se rendre sur la page les rencontres. Une fois sur cette page vous pouvez selectionner la rencontre de l'étudiant voulue dans la liste de droite . Vous pourrez donc enfin cliquer sur les bouton de consultation pour voir les évalutions et les auto-évaluations.</p>
+                    <img src="~/images/NewFolder/FAQRencontresSoutien.PNG" style="width:100%; height:100%" />
+                </div>
+            </div>
+            <div class="accordion-item">
+                <a>Comment Supprimer une rencontre?</a>
+                <div class="content">
+                    <p>Lorsque vous avez créé une rencontre, la couleur de la rencontre dans le gestionnaire de calendirer devient verte et le nom de l'élève jumelé deviens grisé. Pour supprimmer la rencontre vous n'avez qu'a cliquer sur le nom grisé de l'élève voulue. L'autre option s'offrant a vous consiste a supprimer la rencontre via le bouton SUPPRIMER de la page LES RENCONTRES.</p>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <h2>Section Enseignant</h2>
+        <hr />
+        <div class="accordion">
+            <div class="accordion-item">
+                <a>
+                    Comment modifier ou ajouter des plages de disponibilités dans mon horraire?
+                </a>
+                <div class="content">
+                    <p>Pour effectuer cette action, vous n'avez qu'a vous rendre sur la page horaire enseignant. Pour ajouter une rencontre cliquer dans le calendrier a l'endroit voulue comme heure de depart et glisser jusqua l'heure de fin. Vous n'avez plus qu'a y inscrire le nom du cours. Vous pouvez ensuite cliquer sur l'onglet au-dessus du crayon pour entrer le numéro du local ou modifier la plage de cours.</p>
+                    <img src="~/images/NewFolder/FAQHorraireEns.PNG" style="width:100%; height:100%" />
+                    <img src="~/images/NewFolder/FAQHoraireInstruc.PNG" style="width:100%; height:100%" />
+                </div>
+            </div>
+            <div class="accordion-item">
+                <a>Comment modifier mon profil?</a>
+                <div class="content">
+                    <p>Vous pouvez modifier votre profil en vous rendant dans la page MON PROFIL. Vous n'avez ensuite qu'a choisir l'onglet approprié et modifier vos informations.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <a>Comment consulter mes evaluations et mes rencontres?</a>
+                <div class="content">
+                    <p>Il suffit de se rendre dans la page MES ÉVALUATIONS et cliquer sur la rencontre voulue dans la liste de droite afin d'afficher les informations de la rencontre voulue. Vous n'avez qu'a cliquer sur le bouton REMPLIR pour remplir l'évaluation de l'élève voulue.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <a>A quoi sert la page AGENDA?</a>
+                <div class="content">
+                    <p>Elle sert tout simplement à afficher tel un agenda toutes vos rencontres prévues dans un agenda. Il est ainsi plus facile de les visualiser et vous pouvez cliquer sur celles-ci pour avoir leurs informations détaillée </p>
+                    <img src="~/images/NewFolder/FAQAgendaEtu.PNG" style="width:100%; height:100%" />
+                </div>
+            </div>
+            <div class="accordion-item">
+                <a>Comment Supprimer une rencontre?</a>
+                <div class="content">
+                    <p>Lorsque vous avez créé une rencontre, la couleur de la rencontre dans le gestionnaire de calendirer devient verte et le nom de l'élève jumelé deviens grisé. Pour supprimmer la rencontre vous n'avez qu'a cliquer sur le nom grisé de l'élève voulue. L'autre option s'offrant a vous consiste a supprimer la rencontre via le bouton SUPPRIMER de la page LES RENCONTRES.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="~/css/FAQ.css" />
+<script>
+    const items = document.querySelectorAll(".accordion a");
+
+    function toggleAccordion() {
+        this.classList.toggle('active');
+        this.nextElementSibling.classList.toggle('active');
+    }
+
+    items.forEach(item => item.addEventListener('click', toggleAccordion));
+</script>

@@ -32,30 +32,22 @@ namespace PAC.Controllers
             IEnumerable<Question> lstQuestion = _context.tblQuestion.OrderBy(e=>e.position);
             return View(lstQuestion);
         }
-        /*
-        [Authorize(Roles = "ProfDeSoutien")]
-        [HttpPost]
-        public IActionResult Supprimer()
-        {
-
-            int questionId = Convert.ToInt32(HttpContext.Request.Form["select"]);
-            foreach (Question q in _context.tblQuestion.Where(e => e.position > _context.tblQuestion.Find(questionId).position))
-                q.position--;
-            _context.tblQuestion.Remove(_context.tblQuestion.Find(questionId));
-            
-            _context.SaveChanges();
-            return RedirectToAction("index");
-        }
-        */
+        
         [Authorize(Roles = "ProfDeSoutien")]
         public IActionResult Supprimer(int id)
         {
+            try
+            {
+                _context.tblQuestion.Remove(_context.tblQuestion.Find(id));
+                foreach (Question q in _context.tblQuestion.Where(e => e.position > _context.tblQuestion.Find(id).position))
+                    q.position--;
 
-            _context.tblQuestion.Remove(_context.tblQuestion.Find(id));
-            foreach (Question q in _context.tblQuestion.Where(e => e.position > _context.tblQuestion.Find(id).position))
-                q.position--;
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
 
-            _context.SaveChanges();
+            }
             return RedirectToAction("index");
         }
 

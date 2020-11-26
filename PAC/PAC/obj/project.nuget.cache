@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AooevRRJF9L7Ei6frFfpbhUVLxxLiLqEYvQW+D9uUewB8iwPRZCgdl9bI4lc1/t0/Vx8zXpjzLeWPgMmzKESRQ==",
+  "dgSpecHash": "3wsNqCMJ5qvJBvhoasAtQtMqrW4k3cGn/U6LdbgNY0I+hzLjD9Gih4w2ZVIvNvQgM7FoKrVCTPgwMzfmFIx4ng==",
   "success": true,
-  "projectFilePath": "C:\\PAC\\PAC\\PAC\\PAC.csproj",
+  "projectFilePath": "C:\\PAC\\PacCypress\\PAC\\PAC\\PAC.csproj",
   "expectedPackageFiles": [
     "D:\\Users\\1830511\\.nuget\\packages\\dotnetcore.emailservice\\1.0.0\\dotnetcore.emailservice.1.0.0.nupkg.sha512",
     "D:\\Users\\1830511\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",

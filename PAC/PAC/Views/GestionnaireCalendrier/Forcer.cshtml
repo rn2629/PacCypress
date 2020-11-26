@@ -1,0 +1,32 @@
+﻿@model CalendrierControllerModel
+
+    <div>
+        <div>
+            <h4>Nom du Professeur</h4>
+            <input type="text" class="form-control" name="name" disabled="disabled" value="@Model.Prof.UserName" style="width:50%" />
+        </div>
+        <div>
+            <h4>Nom du Cours</h4>
+            <input type="text" class="form-control" name="name" disabled="disabled" value="@Model.Cours.nomCours" style="width:50%" />
+        </div>
+        <div>
+            <h4>Étudiant</h4>
+            <form asp-action="PostForcer" method="post">
+                <select  name="option"  class="custom-select" style="width:50%">
+                    @for (int i = 0; i < Model.Etudiants.Count; i++)
+                    {
+                        <option value="@Model.Etudiants[i].Id" style="width:50%">
+                            @Model.Etudiants[i].UserName
+
+                        </option>
+
+                    }
+                </select>
+                <input name="cours" value="@Model.Cours.id" hidden="hidden" />
+
+                <button type="submit" class="btn-lg btn-secondary evaluation">Forcer la rencontre</button>
+            </form>
+
+
+</div>
+    </div>

@@ -119,11 +119,12 @@ namespace PAC.Controllers
                 return RedirectToPage("Index", "Navigation");
         }
 
-        [HttpPost]
         [Authorize(Roles = "ProfDeSoutien")]
         public IActionResult Supprimer(int tRencontreId)
         {
-            _context.Remove(_context.tblRencontre.Find(tRencontreId));
+            var renc = _context.tblRencontre.Find(tRencontreId);
+            _context.tblRencontre.Remove(_context.tblRencontre.Find(tRencontreId));
+            _context.tblEtudiant.Where(e => e.Id == renc.etudiantId).Select(e => e).First().Jumeler = false;
             _context.SaveChanges();
             return RedirectToAction("index","navigation");
         }

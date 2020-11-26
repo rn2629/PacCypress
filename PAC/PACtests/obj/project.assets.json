@@ -10947,11 +10947,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\PAC\\PAC\\PACtests\\PACtests.csproj",
+      "projectUniqueName": "C:\\PAC\\PacCypress\\PAC\\PACtests\\PACtests.csproj",
       "projectName": "PACtests",
-      "projectPath": "C:\\PAC\\PAC\\PACtests\\PACtests.csproj",
+      "projectPath": "C:\\PAC\\PacCypress\\PAC\\PACtests\\PACtests.csproj",
       "packagesPath": "D:\\Users\\1830511\\.nuget\\packages\\",
-      "outputPath": "C:\\PAC\\PAC\\PACtests\\obj\\",
+      "outputPath": "C:\\PAC\\PacCypress\\PAC\\PACtests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -10970,8 +10970,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\PAC\\PAC\\PAC\\PAC.csproj": {
-              "projectPath": "C:\\PAC\\PAC\\PAC\\PAC.csproj"
+            "C:\\PAC\\PacCypress\\PAC\\PAC\\PAC.csproj": {
+              "projectPath": "C:\\PAC\\PacCypress\\PAC\\PAC\\PAC.csproj"
             }
           }
         }

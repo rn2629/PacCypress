@@ -51,22 +51,22 @@ namespace PAC.Controllers
         public String[] Navigation()
         {
             if (User.IsInRole("Enseignant"))
-                return new string[] { "horaire/enseignant", "Rencontre", "Agenda/Enseignant" };
+                return new string[] { "horaire/enseignant", "Rencontre", "Agenda/Enseignant","FAQ" };
             else if (User.IsInRole("Etudiant"))
-                return new string[] { "horaire/etudiant", "Rencontre", "Identity/Account/Manage", "Agenda" };
+                return new string[] { "horaire/etudiant", "Rencontre", "Identity/Account/Manage", "Agenda/Etudiant","FAQ" };
             else if(User.IsInRole("ProfDeSoutien"))
-                return new string[] { "horaire/enseignant","GestionnaireCalendrier","Rencontre","Rencontre/ProfDeSoutien","Questions", "Identity/Account/Manage","Agenda" };
+                return new string[] { "horaire/enseignant","GestionnaireCalendrier","Rencontre","Rencontre/ProfDeSoutien","Questions", "Identity/Account/Manage","Agenda/Enseignant","FAQ" };
             else
                 return new string[] { };
         }
         public String[] NameNavigation()
         {
             if (User.IsInRole("Enseignant"))
-                return new string[] { "Enseignant", "Rencontre", "Agenda" };
+                return new string[] { "Enseignant", "Rencontre", "Agenda","Aide" };
             else if (User.IsInRole("Etudiant"))
-                return new string[] { "Etudiant", "Rencontre","Mon Profil", "Agenda" };
+                return new string[] { "Etudiant", "Rencontre","Mon Profil", "Agenda","Aide" };
             else if (User.IsInRole("ProfDeSoutien"))
-                return new string[] { "Enseignant", "Gestionnaire Calendrier", "Rencontre", "Rencontre avec Prof De Soutien","Modifier l'evaluation","Mon Profil","Agenda" };
+                return new string[] { "Enseignant", "Gestionnaire Calendrier", "Rencontre", "Rencontre avec Prof De Soutien","Modifier l'evaluation","Mon Profil","Agenda","Aide" };
             else
                 return new string[] { };
         }
